@@ -1,0 +1,62 @@
+<html>
+	<head>
+	<title>Goal Sheet</title>
+	<style>
+		.box{
+				margin:0 auto; 
+				width:570px;
+				padding:20px;
+				background:white;
+				border:2px solid #333;
+			}
+	</style>
+	</head>
+	<body>
+	
+		<center>
+		<br><br>
+		<div class="box">
+		<h1>Goal Sheet</h1>
+		<form action="/" method="post" >
+			<table>
+			<tr>
+				<th><label>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br><br><br></th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="userName" placeholder="Name"><br><br><br></th>
+			</tr>
+			<tr>
+				<th><label>Year:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br><br><br></th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="year" placeholder="Year"><br><br><br></th>
+			</tr>
+			<tr>
+				<th><label>Goal Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br><br><br></th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="goalName" placeholder="Goal Name"><br><br><br></th>
+			</tr>
+			<tr>
+				<th><label>Goal description:</label><br><br><br>&nbsp;&nbsp;</th>
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea rows="5" cols="22" name="goalDescription" placeholder="Goal Description"></textarea><br><br><br></th>
+			</tr>
+			<tr>
+				<th><label>Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br><br><br></th>
+				<th><input type="date" name="dateYear" placeholder="01/01/2021"><br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+			</tr>
+			<tr>
+				<th><button type="submit" name="submit" value="add" style="width:100px;">Submit</button></th> 
+      			<th><input type="reset" value="Clear" style="width:100px;"></th>
+      		</tr>  
+      		</table>
+		</form>
+		<br> <br> <br>
+		<a href="{{ url_for('userReview') }}"> User Review </a>
+		<br> <br>
+		<a href="{{ url_for('managerReview') }}"> Manager Review </a>
+		</div>
+		</center>
+		
+		{% if 'true' in success %}
+			<script>
+				alert("Goal Added")
+		  	</script>
+		{% endif %}
+
+	</body>
+</html>
