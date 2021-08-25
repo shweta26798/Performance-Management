@@ -1,0 +1,104 @@
+<html>
+	<head>
+	<title>Manager Review</title>
+	<style>
+		.box{
+				margin:0 auto; 
+				width:750px;
+				padding:20px;
+				background:white;
+				border:2px solid #333;
+				height:400px;
+			}
+			#headerRow
+			{
+				background-color:#E8E8E8;
+				outline: thin solid #888888;
+				font-weight: bold;
+			}
+			#columnLine
+			{
+				outline: 1.5px solid #888888;
+				font-weight: normal;
+			}
+			#headColumnLine
+			{
+				outline: 1.5px solid #888888;
+			}
+	</style>
+	</head>
+	<body>
+		<center>
+		<br><br>
+		<div class="box">
+		<h1>Manager Review</h1>
+		<br><br>
+		<a href="/"> Goal Sheet </a>
+		<form action="/managerReview" method="post">
+			<table>
+			<tr>
+				<th>
+					<select name="userOption" width="300px">
+						<option>SELECT USER</option>
+						{% for user in userList %}
+							<option value="{{ user }}">{{ user }}</option>
+						{% endfor %}
+					</select><br><br></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>
+					<select id="generateYear" name="userYear">
+					
+					</select><br><br></th>
+					<script>
+						var start = 2000;
+						var end = new Date().getFullYear();
+						var options = "";
+						options += "<option>SELECT YEAR</option>";
+						for(var year = start ; year <=end; year++){
+						options += "<option>"+ year +"</option>";
+						}
+						document.getElementById("generateYear").innerHTML = options;
+					</script><br><br></th>
+			</tr>
+			<tr id="headerRow" height="25px" style="font-weight: bold;">
+				<th width="150px" id="headColumnLine">Goal</th>
+				<th width="200px" id="headColumnLine">Goal Description</th>
+				<th width="100px" id="headColumnLine">Date</th>
+				<th width="150px" id="headColumnLine">User Ratings</th>
+				<th width="150px" id="headColumnLine">Manager Ratings</th>
+				<th width="150px" id="headColumnLine">Comments</th>
+			</tr>
+
+			{%for d in data %}
+				{% if y in d[6] %}
+					<tr id="headerRow" style="background-color:white;" height="25px">
+						<th height="25px" id="columnLine">{{ d[0] }}</th>
+						<th id="columnLine">{{ d[1] }} </th>
+						<th id="columnLine">{{ d[2] }}</th>
+						<th id="columnLine">{{ d[3] }}</th>
+						<th id="columnLine"><input type="text" name="managerRat" value= {{d[4]}} ></th>
+						<th id="columnLine">{{ d[5] }}</th>
+						<!-- <input type="text" name="userRat" value= {{d[3]}} > -->
+					</tr>
+				{% endif %}
+			{%endfor%}
+			
+		<tr>
+				<th><br><br><button type="submit" name="submit" value="save" style="width:100px;background-color:#E8E8E8;">Save</button></th> 
+      			<th><br><br></th>
+      			<th><br><br></th>
+      			<th><br><br></th>
+      			<th><br><br></th>
+      			<th><br><br>
+					<button type="submit" name="submit" value="showGoals" style="width:100px;background-color:#E8E8E8;">Submit</button></th>
+      		</tr>  
+      		</table>
+		</form>
+		</div>
+		</center>
+	</body>
+</html>
+			
