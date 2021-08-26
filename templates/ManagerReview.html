@@ -25,6 +25,26 @@
 			{
 				outline: 1.5px solid #888888;
 			}
+			a:link, a:visited {
+			background-color: white;
+			color: black;
+			border: 2px solid orangered;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			}
+
+			a:hover, a:active {
+			background-color: orangered;
+			color: white;
+			}
+			body{
+				background-color: #F9E79F ;
+			}
+			h3{
+				color: red;
+			}
 	</style>
 	</head>
 	<body>
@@ -34,7 +54,7 @@
 		<h1>Manager Review</h1>
 		<br><br>
 		<a href="/"> Goal Sheet </a>
-		<form action="/managerReview" method="post">
+		<form name="form3" action="/managerReview" method="post" onsubmit="return emptyValidation()" >
 			<table>
 			<tr>
 				<th>
@@ -63,42 +83,61 @@
 						document.getElementById("generateYear").innerHTML = options;
 					</script><br><br></th>
 			</tr>
-			<tr id="headerRow" height="25px" style="font-weight: bold;">
-				<th width="150px" id="headColumnLine">Goal</th>
-				<th width="200px" id="headColumnLine">Goal Description</th>
-				<th width="100px" id="headColumnLine">Date</th>
-				<th width="150px" id="headColumnLine">User Ratings</th>
-				<th width="150px" id="headColumnLine">Manager Ratings</th>
-				<th width="150px" id="headColumnLine">Comments</th>
-			</tr>
-
-			{%for d in data %}
-				{% if y in d[6] %}
-					<tr id="headerRow" style="background-color:white;" height="25px">
-						<th height="25px" id="columnLine">{{ d[0] }}</th>
-						<th id="columnLine">{{ d[1] }} </th>
-						<th id="columnLine">{{ d[2] }}</th>
-						<th id="columnLine">{{ d[3] }}</th>
-						<th id="columnLine"><input type="text" name="managerRat" value= {{d[4]}} ></th>
-						<th id="columnLine">{{ d[5] }}</th>
-						<!-- <input type="text" name="userRat" value= {{d[3]}} > -->
-					</tr>
-				{% endif %}
-			{%endfor%}
+			
+			<h3>{{name}}</h3>
+			
+			{% if "success" in flag %}
+				<tr id="headerRow" height="25px" style="font-weight: bold;">
+					<th width="150px" id="headColumnLine">Goal</th>
+					<th width="200px" id="headColumnLine">Goal Description</th>
+					<th width="100px" id="headColumnLine">Date</th>
+					<th width="150px" id="headColumnLine">User Ratings</th>
+					<th width="150px" id="headColumnLine">Manager Ratings</th>
+					<th width="150px" id="headColumnLine">Comments</th>
+				</tr>
+				{%for d in data %}
+					{% if y in d[6] %}
+						<tr id="headerRow" style="background-color:white;" height="25px">
+							<th height="25px" id="columnLine">{{ d[0] }}</th>
+							<th id="columnLine">{{ d[1] }} </th>
+							<th id="columnLine">{{ d[2] }}</th>
+							<th id="columnLine">{{ d[3] }}</th>
+							<th id="columnLine"><input type="text" name="managerRat" value= {{d[4]}} ></th>
+							<th id="columnLine"><input type="text" name="managerComment" value= {{d[5]}} ></th>
+							<!-- <input type="text" name="userRat" value= {{d[3]}} > -->
+						</tr>
+					{% endif %}
+				{%endfor%}
+			{% else %} 
+					<h3>No details! Enter User and Year </h3>
+			{% endif %}
 			
 		<tr>
-				<th><br><br><button type="submit" name="submit" value="save" style="width:100px;background-color:#E8E8E8;">Save</button></th> 
+				<th><button type="submit" name="submit" value="showGoals" style="width:100px;background-color:#E8E8E8;">Submit</button></th>
       			<th><br><br></th>
       			<th><br><br></th>
       			<th><br><br></th>
       			<th><br><br></th>
-      			<th><br><br>
-					<button type="submit" name="submit" value="showGoals" style="width:100px;background-color:#E8E8E8;">Submit</button></th>
+      			<th>
+					<button type="submit" name="submit" value="save" style="width:100px;background-color:#E8E8E8;">Save</button></th> 
       		</tr>  
       		</table>
 		</form>
 		</div>
 		</center>
+		<script>
+			function emptyValidation() {
+			   var userOption = document.forms["form3"]["userOption"].value;
+			   var userYear = document.forms["form3"]["userYear"].value;
+
+			   if ( userOption == "SELECT USER" || userYear == "SELECT YEAR") {
+				 	alert("Please Enter Values");
+				  return false;
+			   }
+			   return true;
+			   
+			}
+		 </script>
 	</body>
 </html>
 			
