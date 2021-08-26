@@ -25,6 +25,26 @@
 			{
 				outline: 1.5px solid #888888;
 			}
+			a:link, a:visited {
+			background-color: white;
+			color: black;
+			border: 2px solid orangered;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			}
+
+			a:hover, a:active {
+			background-color: orangered;
+			color: white;
+			}
+			body{
+				background-color: #F9E79F ;
+			}
+			h3{
+				color: red;
+			}
 	</style>
 	
 	</head>
@@ -35,7 +55,7 @@
 		<h1>User Review</h1>
 		<br><br>
 		<a href="/"> Goal Sheet </a>
-		<form action="/userReview" method="post">
+		<form name="form2" action="/userReview" method="post" onsubmit="return emptyValidation()">
 			<table>
 			<tr>
 				<th>
@@ -65,41 +85,60 @@
 					document.getElementById("generateYear").innerHTML = options;
 				</script>
 			</tr>
-			<tr id="headerRow" height="25px" style="font-weight: bold;">
-				<th width="150px" id="headColumnLine">Goal</th>
-				<th width="200px" id="headColumnLine">Goal Description</th>
-				<th width="100px" id="headColumnLine">Date</th>
-				<th width="150px" id="headColumnLine">User Ratings</th>
-			</tr>
-
-			{%for d in data %}
-				{% if y in d[4] %}
-					<tr id="headerRow" style="background-color:white;" height="25px">
-						<th height="25px" id="columnLine">{{ d[0] }}</th>
-						<th id="columnLine">{{ d[1] }} </th>
-						<th id="columnLine">{{ d[2] }}</th>
-						<th id="columnLine"><input type="text" name="userRat" value= {{d[3]}} >  </th>
-					</tr>
-				{% endif %}
+			
+			<tr> <h3>{{name}}</h3> </tr>
+			{% if "success" in flag %}
+				<tr id="headerRow" height="25px" style="font-weight: bold;">
+					<th width="150px" id="headColumnLine">Goal</th>
+					<th width="200px" id="headColumnLine">Goal Description</th>
+					<th width="100px" id="headColumnLine">Date</th>
+					<th width="150px" id="headColumnLine">User Ratings</th>
+				</tr>
+				{%for d in data %}
+					{% if y in d[4] %}
+						<tr id="headerRow" style="background-color:white;" height="25px">
+							<th height="25px" id="columnLine">{{ d[0] }}</th>
+							<th id="columnLine">{{ d[1] }} </th>
+							<th id="columnLine">{{ d[2] }}</th>
+							<th id="columnLine"><input type="text" name="userRat" value= {{d[3]}} >  </th>
+						</tr>
+					{% endif %}
+				{%endfor%}		
+			{% else %} 
+					<h3>No details! Enter User and Year </h3>
+			{% endif %}
 				
-			{%endfor%}
+			
 
 			
 			
 		<tr>
 				<th><br><br>
-					<button type="submit" name="submit" value="save" style="width:100px;background-color:#E8E8E8;">Save</button>
+					<button type="submit" name="submit" value="showGoals" style="width:100px;background-color:#E8E8E8;">Submit</button>
 				</th> 
-      			<th><br><br></th>
-      			<th><br><br></th>
-      			<th><br><br>
-				<button type="submit" name="submit" value="showGoals" style="width:100px;background-color:#E8E8E8;">Submit</button>
+				<th><br><br></th>
+				<th><br><br></th>
+				<th><br><br>
+					<button type="submit" name="submit" value="save" style="width:100px;background-color:#E8E8E8;">Save</button>
       			</th>
       		</tr>  
       		</table>
 		</form>
 		</div>
 		</center>
+		<script>
+			function emptyValidation() {
+			   var userOption = document.forms["form2"]["userOption"].value;
+			   var userYear = document.forms["form2"]["userYear"].value;
+
+			   if ( userOption == "SELECT USER" || userYear == "SELECT YEAR") {
+				 	alert("Please Enter Values");
+				  return false;
+			   }
+			   return true;
+			   
+			}
+		 </script>
 	</body>
 </html>
 			
