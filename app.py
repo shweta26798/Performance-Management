@@ -43,9 +43,10 @@ def basic():
                         "ManagerRating":managerRating,
                         "Comments":comments
                     })
+                    return render_template('GoalSheet.html',flag = "success")    
                     print(result)
                     
-	return render_template('GoalSheet.html',success = "true")
+	return render_template('GoalSheet.html',flag = "failed")
 
 @app.route('/userReview', methods=['GET', 'POST'])
 def userReview() :
@@ -68,6 +69,7 @@ def userReview() :
             for ind in val.index:
                 data.append([ val['index'][ind], val['Description'][ind], val['DateYear'][ind], val['UserRating'][ind], val['Year'][ind]])
             print(data)
+            return render_template('UserReview.html',userList = user_names, data = data, y = useryear, flag = "success")
             # data = val.loc["Year"]
             # print(data.tolist())
             # useryear = request.form['userYear']
@@ -80,10 +82,19 @@ def userReview() :
             if len(rating_val) == 0 :
                 pass
             else:
-                db.child("Users").child(username).child("Goals").child('G1').update({"UserRating":rating_val[0]})
-                db.child("Users").child(username).child("Goals").child('G2').update({"UserRating":rating_val[1]})
+                values = db.child("Users").child(username).child("Goals").get().val()
+                val = pd.DataFrame(values)
+                val = val.transpose()
+                val.reset_index(inplace=True)
+                print(val)
+                i = 0
+                for ind in val.index:
+                    db.child("Users").child(username).child("Goals").child(val['index'][ind]).update({"UserRating":rating_val[i]})
+                    i = i + 1
+                    
+                # db.child("Users").child(username).child("Goals").child('G1').update({"UserRating":rating_val[0]})
 
-    return render_template('UserReview.html',userList = user_names, data = data, y = useryear)
+    return render_template('UserReview.html',userList = user_names, data = data, y = useryear, flag="failed")
 
 @app.route('/managerReview', methods=['GET', 'POST'])
 def managerReview() :
@@ -109,8 +120,10 @@ def managerReview() :
             # data = val.loc["Year"]
             # print(data.tolist())
             # useryear = request.form['userYear']
+            return render_template('ManagerReview.html',userList = user_names, data = data, y = useryear,flag = "success")
         if request.form['submit'] == 'save':
             rating_val = request.form.getlist('managerRat')  
+            manager_comm = request.form.getlist('managerComment')
             username = request.form['userOption'] 
             print(username) 
             print(rating_val, len(rating_val))
@@ -118,10 +131,18 @@ def managerReview() :
             if len(rating_val) == 0 :
                 pass
             else:
-                db.child("Users").child(username).child("Goals").child('G1').update({"ManagerRating":rating_val[0]})
-                db.child("Users").child(username).child("Goals").child('G2').update({"ManagerRating":rating_val[1]})
+                values = db.child("Users").child(username).child("Goals").get().val()
+                val = pd.DataFrame(values)
+                val = val.transpose()
+                val.reset_index(inplace=True)
+                print(val)
+                i = 0
+                for ind in val.index:
+                    db.child("Users").child(username).child("Goals").child(val['index'][ind]).update({"ManagerRating":rating_val[i]})
+                    db.child("Users").child(username).child("Goals").child(val['index'][ind]).update({"Comments":manager_comm[i]})
+                    i = i + 1
 
-    return render_template('ManagerReview.html',userList = user_names, data = data, y = useryear)
+    return render_template('ManagerReview.html',userList = user_names, data = data, y = useryear, flag="failed")
 
 if __name__ == '__main__':
 	app.run(debug=True)
